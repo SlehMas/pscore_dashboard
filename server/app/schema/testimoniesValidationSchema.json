@@ -1,0 +1,9 @@
+{
+  "postSchema": {
+     "type": "object",
+     "required": [
+       "subject",
+       "body"
+     ]
+  }
+}

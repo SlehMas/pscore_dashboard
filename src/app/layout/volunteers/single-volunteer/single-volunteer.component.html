@@ -1,0 +1,47 @@
+<app-page-header [heading]="id ? 'Edit Volunteer' : 'New Volunteer'" [icon]=""></app-page-header>
+<form action="" [formGroup]="volunteerForm" *ngIf="volunteerForm" (submit)="submit()">
+  <div class="form-group">
+    <label for="firstname">First Name</label>
+    <input type="text" name="firstname" id="firstname" formControlName="firstname" class="form-control">
+
+    <label for="lastname">Last Name</label>
+    <input type="text" name="lastname" id="lastname" formControlName="lastname" class="form-control">
+
+    <label for="email">Email</label>
+    <input type="text" name="email" id="email" formControlName="email" class="form-control">
+
+    <label for="country">Country</label>
+    <input type="text" name="country" id="country" formControlName="country" class="form-control">
+
+    <label for="phone">Phone</label>
+    <input type="text" name="phone" id="phone" formControlName="phone" class="form-control">
+
+    <label for="s_date">Start date</label>
+    <input type="date" name="s_date" id="s_date" formControlName="startDate" 
+      class="form-control"  (change)="setMinDate($event.target.value)"  [max]="maxDate" value="{{startDate | date:'yyyy-MM-dd'}}" required>
+
+    <label for="e_date">End Date</label>
+    <input type="date" name="e_date" id="e_date" formControlName="endDate" 
+      class="form-control" (change)="setMaxDate($event.target.value)" [min]="minDate" value="{{endDate | date:'yyyy-MM-dd'}}" required>
+
+    <label for="longitude">Longitude</label>
+    <input type="number" step="0.0001" required formControlName="longitude" class="form-control">
+
+    <label for="latitude">Latitude</label>
+    <input type="number" step="0.0001" required formControlName="latitude" class="form-control">
+
+    <label for="description">Description</label>
+    <textarea name="description" id="description" cols="30" rows="10" formControlName="description"
+      class="form-control"></textarea>
+
+    <label for="status">Is Active?</label>
+    <input type="checkbox" name="status" class="ml-4" [checked]="active" (change)="setActive()">
+
+    <div class="btn-group mt-5 pull-right">
+      <input type="submit" value="Save Changes" class="btn btn-primary" [disabled]="isSubmitted">
+      <a [routerLink]="['/volunteers']" class="btn btn-default">
+        Cancel &amp; Return
+      </a>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,11 @@
+{
+  "dev": {
+    "host": "localhost",
+    "connectionLimit" : 100,
+    "user": { "ENV" : "DB_USER" },
+    "password" : { "ENV" : "DB_PASS" },
+    "database": "pscore_db",
+    "driver": "mysql",
+    "multipleStatements": true
+  }
+}

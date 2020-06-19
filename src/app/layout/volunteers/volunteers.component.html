@@ -1,0 +1,65 @@
+<app-page-header [heading]="'Volunteers'" [icon]=""></app-page-header>
+<div class="mb-3">
+  <a [routerLink]="['/volunteers/new']" class="btn btn-danger">Add volunteer</a>
+</div>
+<div class="card">
+  <div class="card-body table-responsive">
+    <div *ngIf="!volunteers.length">
+      <h2 class="text-center">No data found</h2>
+    </div>
+    <table class="table" *ngIf="volunteers.length">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Email</th>
+          <th>Full Name</th>
+          <th>Start date</th>
+          <th>End date</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let volunteer of volunteers">
+          <th scope="row">{{volunteer.id}}</th>
+          <td>{{volunteer.email}}</td>
+          <td>{{volunteer.firstname}}&nbsp;{{volunteer.lastname}}</td>
+          <td>{{volunteer.start_date}}</td>
+          <td>{{volunteer.end_date}}</td>
+          <td>{{volunteer.status}}</td>
+          <td>
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <a [routerLink]="['/volunteers/edit', volunteer.id]" style="color: white" class="btn btn-primary">
+                <i class="fa fa-pencil"></i>
+              </a>
+              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal"
+                (click)="showModal(volunteer.id)">
+                <i class="fa fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="modal fade show" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" (click)='closeModal()'>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this volunteer?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)='closeModal()'>Cancel</button>
+        <button type="button" class="btn btn-primary" (click)='delete ()'>Yes</button>
+      </div>
+    </div>
+  </div>
+</div>

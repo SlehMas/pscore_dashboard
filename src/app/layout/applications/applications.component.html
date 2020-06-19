@@ -1,0 +1,28 @@
+<app-page-header [heading]="'Applications'" [icon]=""></app-page-header>
+<div class="card">
+  <div class="card-body table-responsive">
+    <div *ngIf="!applications.length">
+      <h2 class="text-center">No data found</h2>
+    </div>
+    <table class="table" *ngIf="applications.length">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Email</th>
+          <th>Full Name</th>
+          <th>Applying to be</th>
+          <th>Result</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let application of applications">
+          <th scope="row">{{application.id}}</th>
+          <td>{{application.email}}</td>
+          <td>{{application.firstname}}&nbsp;{{application.lastname}}</td>
+          <td>{{application.purpose}}</td>
+          <td>{{application.verdict}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

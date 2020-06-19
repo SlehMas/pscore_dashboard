@@ -1,0 +1,14 @@
+<div class="row" *ngIf="volunteers" style="height: 100vh;">
+  <div class="col-md-3">
+    <h2>List of volunteers</h2>
+    <p>Check out the list of volunteers in the map</p>
+    <span *ngFor="let v of volunteers">
+      <a href="#" (click)="showVolunteer(v.longitude, v.latitude)">
+        {{v.firstname}}&nbsp;{{v.lastname}}
+      </a>
+    </span>
+  </div>
+  <div class="col-md-9">
+    <div id="map" class="map"></div>
+  </div>
+</div>

@@ -1,0 +1,76 @@
+<nav class="sidebar" [ngClass]="{sidebarPushRight: isActive, collapsed: collapsed}">
+  <div class="list-group">
+    <a [routerLink]="['/dashboard']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+      <i class="fa fa-fw fa-home"></i>&nbsp;
+      <span>{{ 'Home' | translate }}</span>
+    </a>
+    <a [routerLink]="['/article']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+      <i class="fa fa-fw fa-table"></i>&nbsp;
+      <span>{{ 'Articles' | translate }}</span>
+    </a>
+    <a [routerLink]="['/testimonies']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+      <i class="fa fa-eye"></i>&nbsp;
+      <span>{{ 'Testimonies' | translate }}</span>
+    </a>
+    <a [routerLink]="['/comments']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+      <i class="fa fa-comment"></i>&nbsp;
+      <span>{{ 'Comments' | translate }}</span>
+    </a>
+    <a [routerLink]="['/inventory']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+      <i class="fa fa-shopping-cart"></i>&nbsp;
+      <span>{{ 'Inventory' | translate }}</span>
+    </a>
+
+    <div class="nested-menu">
+      <a class="list-group-item" (click)="addExpandClass('pages')">
+        <i class="fa fa-plus"></i>&nbsp;
+        <span>{{ 'Users' | translate }}</span>
+      </a>
+      <li class="nested" [class.expand]="showMenu === 'pages'">
+        <ul class="submenu">
+          <li>
+            <a [routerLink]="['/users']" [routerLinkActive]="['router-link-active']" >
+              <i class="fa fa-monument"></i>&nbsp;
+              <span>{{ 'List' | translate }}</span>
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['/applications']" [routerLinkActive]="['router-link-active']" >
+              <i class="fa fa-monument"></i>&nbsp;
+              <span>{{ 'Applications' | translate }}</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </div>
+
+    <!-- TODO Office management -->
+
+    <div class="nested-menu">
+      <a class="list-group-item" (click)="addExpandClass('office')">
+        <i class="fa fa-desktop"></i>&nbsp;
+        <span>{{ 'Office' | translate }}</span>
+      </a>
+      <li class="nested" [class.expand]="showMenu === 'office'">
+        <ul class="submenu">
+          <li>
+            <a [routerLink]="['/volunteers']" [routerLinkActive]="['router-link-active']" >
+              <i class="fa fa-users"></i>&nbsp;
+              <span>{{ 'Volunteers' | translate }}</span>
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['/volunteers/map']" [routerLinkActive]="['router-link-active']" >
+              <i class="fa fa-map"></i>&nbsp;
+              <span>{{ 'Map' | translate }}</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </div>
+  </div>
+  <div class="toggle-button" [ngClass]="{collapsed: collapsed}" (click)="toggleCollapsed()">
+    <i class="fa fa-fw fa-angle-double-{{collapsed?'right':'left'}}"></i>&nbsp;
+    <span>{{ 'Collapse Sidebar' | translate }}</span>
+  </div>
+</nav>

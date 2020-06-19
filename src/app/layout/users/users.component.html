@@ -1,0 +1,36 @@
+<app-page-header [heading]="'Users'" [icon]=""></app-page-header>
+<div class="card">
+  <div class="card-body table-responsive">
+    <div *ngIf="!users.length">
+      <h2 class="text-center">No data found</h2>
+    </div>
+    <table class="table" *ngIf="users.length">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Email</th>
+          <th>Username</th>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <th scope="row">{{user.id}}</th>
+          <td>{{user.email}}</td>
+          <td>{{user.username}}</td>
+          <td>{{user.firstname}}&nbsp;{{user.lastname}}</td>
+          <td>{{user.status}}</td>
+          <td>
+            <div class="btn-group" role="group" aria-label="Basic example">                
+              <a [routerLink]="['/users/edit', user.id]" style="color: white" class="btn btn-primary">
+                <i class="fa fa-pencil"></i>
+              </a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

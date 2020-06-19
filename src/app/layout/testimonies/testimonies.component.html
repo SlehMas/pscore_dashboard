@@ -1,0 +1,69 @@
+<div [BrowserAnimationsModule]>
+  <app-page-header [heading]="'Testimonies'" [icon]=""></app-page-header>
+  <div class="mb-3">
+    <a [routerLink]="['/testimonies/new']" class="btn btn-danger">Add testimony</a>
+  </div>
+  <div class="card">
+    <div class="card-body table-responsive">
+      <div *ngIf="!testimonies.length">
+        <h2 class="text-center">No data found</h2>
+      </div>
+      <table class="table" *ngIf="testimonies.length">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Subject</th>
+            <th>Created at</th>
+            <th>Updated at at</th>
+            <th>Body</th>
+            <th>Author</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let testimony of testimonies">
+            <th scope="row">{{testimony.id}}</th>
+            <td>{{testimony.subject}}</td>
+            <td>{{testimony.created_at}}</td>
+            <td>{{testimony.updated_at || '-'}}</td>
+            <td class="subject-display">{{testimony.body}}</td>
+            <td>{{testimony.username}}</td>
+            <td>
+              <div class="btn-group" role="group" aria-label="Basic example">                
+                <a [routerLink]="['/testimonies/edit', testimony.id]" style="color: white" class="btn btn-primary">
+                  <i class="fa fa-pencil"></i>
+                </a>
+                <button type="button" 
+                        class="btn btn-danger" 
+                        data-toggle="modal" 
+                        data-target="#exampleModal"
+                        (click)="showModal(testimony.id)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="modal fade show" id="testimoniesModal" tabindex="-1" role="dialog" aria-labelledby="testimoniesModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="testimoniesModalLabel">Confirm</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" (click)='closeModal()'>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this testimony?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)='closeModal()'>Cancel</button>
+        <button type="button" class="btn btn-primary" (click)='delete ()'>Yes</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+{
+	"/api/*": {
+		"target": "http://localhost:9890",
+		"secure": false,
+		"logLevel": "debug",
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": "http://localhost:9890/api"
+    }
+	},
+	"/secureApi/*": {
+		"target": "http://localhost:9890",
+		"secure": false,
+		"logLevel": "debug",
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/secureApi": "http://localhost:989/secureApi"
+    }
+	}
+}

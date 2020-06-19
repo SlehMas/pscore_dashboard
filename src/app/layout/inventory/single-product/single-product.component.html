@@ -1,0 +1,48 @@
+<app-page-header [heading]="id ? 'Edit Product' : 'New Product'" [icon]=""></app-page-header>
+<form action="" [formGroup]="productForm" *ngIf="productForm">
+  <div class="form-group">
+    <label for="">Title</label>
+    <input type="text" name="title" id="title" class="form-control" formControlName="title">
+
+    <label for="">Price</label>
+    <input type="number" name="price" id="price" class="form-control" formControlName="price">
+
+    <label for="">Inventory</label>
+    <input type="number" name="inventory" id="inventory" class="form-control" formControlName="inventory">
+
+    <label for="">Category</label>
+    <input type="text" name="category" id="category" class="form-control" formControlName="category">
+
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <label for="">Image</label>
+        <input type="file" 
+               name="image" 
+               id="image" 
+               class="form-control"
+               (change)="fileProgress($event)"
+               formControlName="image">
+      </div>
+      <div class="col" *ngIf="!previewUrl && product && product.image">
+        <img [src]="product.image" height="300" />
+      </div>
+      <div class="col" *ngIf="previewUrl">
+        <img [src]="previewUrl" height="300" />
+      </div>
+    </div>
+
+    <label for="">Description</label>
+    <textarea name="description" id="body" cols="30" rows="10" class="form-control"
+      formControlName="description"></textarea>
+
+    <div class="btn-group mt-3 pull-right">
+      <button class="btn btn-primary" [disabled]="isSubmitted" (click)="submit()">
+        Save Changes
+      </button>
+      <a [routerLink]="['/inventory']" class="btn btn-default">
+        Cancel &amp; Return
+      </a>
+    </div>
+  </div>
+
+</form>
