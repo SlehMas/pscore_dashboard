@@ -10,16 +10,19 @@ const articleModel = {
 }
 
 function updateArticle (article) {
-  const articleId = article.id
+  const articleId = article.id_article
+
   const keys = Object.keys(article)
   let values = Object.values(article)
   const updateRows = values.map((v, index) => {
     if (typeof v === 'string') v = `'${v}'`
     return `${keys[index]}=${v}` 
   })
+
   return new Promise((resolve, reject) => {
-    db.query(`update articles set ${updateRows.join(',')}where id =${articleId}`, (error, rows, fields) => {
+    db.query(`update articles set ${updateRows.join(',')}where id_article =${articleId}`, (error, rows, fields) => {
       if (!!error) {
+        console.log(error)
         dbFunc.connectionRelease;
         reject(error);
       } else {
@@ -32,7 +35,7 @@ function updateArticle (article) {
 
 function getArticles() {
   return new Promise((resolve, reject) => {
-    db.query('SELECT A.`id`, A.`subject`, A.`body`, A.`author`, A.`image`, A.`created_at`, A.`updated_at`, U.username FROM `articles` A join USERS U WHERE U.id = A.author', (error, rows, fields) => {
+    db.query('SELECT * from articles', (error, rows, fields) => {
       if (!!error) {
         dbFunc.connectionRelease;
         reject(error);
@@ -46,7 +49,7 @@ function getArticles() {
 
 function getArticle(id) {
   return new Promise((resolve, reject) => {
-    db.query('SELECT A.id, A.subject, A.body, A.author, A.image, A.created_at, A.updated_at, U.username FROM articles A join USERS U WHERE U.id = A.author AND A.id=' + id, (error, rows, fields) => {
+    db.query('SELECT * from articles where id_article =' + id, (error, rows, fields) => {
       if (!!error) {
         dbFunc.connectionRelease;
         reject(error);
@@ -60,7 +63,7 @@ function getArticle(id) {
 
 function deleteArticle (id) {
   return new Promise((resolve, reject) => {
-    db.query(`delete from articles where id=${id}`, (error, rows, fields) => {
+    db.query(`delete from articles where id_article=${id}`, (error, rows, fields) => {
       if (!!error) {
         dbFunc.connectionRelease;
         reject(error);
@@ -85,6 +88,7 @@ function addArticle(article) {
       db.query(`insert into articles(${keys}) values (${values})`, (error, rows, fields) => {
         if (!!error) {
           dbFunc.connectionRelease;
+          console.log(error)
           reject(error);
         } else {
           dbFunc.connectionRelease;

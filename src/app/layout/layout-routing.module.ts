@@ -15,7 +15,8 @@ const routes: Routes = [
             { path: 'comments', loadChildren: () => import('./comment/comment.module').then(m => m.CommentModule) },
             { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
             { path: 'volunteers', loadChildren: () => import('./volunteers/volunteers.module').then(m => m.VolunteersModule) },
-            { path: '', redirectTo: 'dashboard', pathMatch: 'prefix' },
+            { path: 'orders', loadChildren: () => import('./orders/order.module').then(m => m.OrderModule) },
+            { path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
         ]
     }
 ];

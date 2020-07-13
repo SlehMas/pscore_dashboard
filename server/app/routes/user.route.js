@@ -9,12 +9,16 @@ var mail = require('./../../common/mailer.js');
 function init(router) {
   router.route('/applications')
     .get(getAllApplications)
+    .put(updateApplication)
   router.route('/user')
     .get(getAllUsers)
+    .post(createUser)
   router.route('/user/student')
     .get(getStudents)
   router.route('/user/student/teacher/new')
     .post(assignTeacher)
+  router.route('/user/student/:sid/teacher/:tid')
+    .delete(removeTeacherForStudent)
   router.route('/user/student/:id/teacher')
     .get(getTeachersByStudentId)
   router.route('/user/student/:id/teacher/new')
@@ -27,6 +31,37 @@ function init(router) {
     .get(getUserById)
     .delete(deleteUser)
     .put(updateUser);
+}
+
+function createUser (req, res) {
+  const newUser = req.body
+  userService.createUser(newUser).then(data => {
+    res.send(data)
+  }).catch((err) => {
+    res.send(err);
+  });
+}
+
+function updateApplication (req, res) {
+  const status = req.body.status
+  const appId = req.body.application_id
+
+  userService.updateApplication(status, appId).then(data => {
+    res.send(data)
+  }).catch((err) => {
+    res.send(err);
+  });
+}
+
+function removeTeacherForStudent (req, res) {
+  const idStudent = req.params.sid
+  const idTeacher = req.params.tid
+  console.log('hello', idStudent, idTeacher)
+  userService.removeTeacherForStudent(idTeacher, idStudent).then(data => {
+    res.send(data);
+  }).catch((err) => {
+    res.send(err);
+  });
 }
 
 function getAllApplications (req, res) {
@@ -103,6 +138,7 @@ function getAllUsers(req, res) {
 function getUserById(req, res) {
 
   let userId = req.params.id;
+  console.log(req.params.id)
 
   userService.getUserById(userId).then((data) => {
     res.send(data);

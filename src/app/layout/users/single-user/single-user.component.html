@@ -17,10 +17,10 @@
     <input type="text" name="phone" id="phone" cols="30" rows="10" class="form-control" formControlName="phone">
 
     <!-- List of teachers begin -->
-    <div *ngIf="user.status == 'student'" class="mt-5">
+    <div *ngIf="user.status_user == 'student'" class="mt-5">
       
       <h4>List of teachers</h4>
-      <button class="btn btn-danger mb-3" (click)="showModal()">Add teacher</button>
+      <button class="btn btn-danger mb-3" (click)="showTeacherModal()">Add teacher</button>
       <table class="table" *ngIf="teachers.length">
         <thead>
           <tr>
@@ -31,12 +31,12 @@
         </thead>
         <tbody>
           <tr *ngFor="let teacher of teachers">
-            <td>{{teacher.firstname}}&nbsp;{{teacher.lastname}}</td>
-            <td>{{teacher.email}}</td>
+            <td>{{teacher.firstname_user}}&nbsp;{{teacher.lastname_user}}</td>
+            <td>{{teacher.email_user}}</td>
             <td>
               <div class="btn-group" role="group" aria-label="Basic example">
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal"
-                  (click)="showModal(user.id)">
+                  (click)="showDeleteTeacherModal(teacher.id_user)">
                   <i class="fa fa-trash"></i>
                 </button>
               </div>
@@ -48,7 +48,7 @@
     <!-- List of teachers end -->
 
     <!-- List of students begin -->
-    <div *ngIf="user.status == 'teacher'" class="mt-5">
+    <div *ngIf="user.status_user == 'teacher'" class="mt-5">
       <h4>List of Students</h4>
       <table class="table" *ngIf="students.length">
         <thead>
@@ -59,8 +59,8 @@
         </thead>
         <tbody>
           <tr *ngFor="let student of students">
-            <td>{{student.firstname}}&nbsp;{{student.lastname}}</td>
-            <td>{{student.email}}</td>
+            <td>{{student.firstname_user}}&nbsp;{{student.lastname_user}}</td>
+            <td>{{student.email_user}}</td>
           </tr>
         </tbody>
       </table>
@@ -99,8 +99,8 @@
           </thead>
           <tbody>
             <tr *ngFor="let teacher of newTeachers">
-              <td>{{teacher.firstname}}&nbsp;{{teacher.lastname}}</td>
-              <td>{{teacher.email}}</td>
+              <td>{{teacher.firstname_user}}&nbsp;{{teacher.lastname_user}}</td>
+              <td>{{teacher.email_user}}</td>
               <td>
                 <div class="btn-group" role="group" aria-label="Basic example">
                   <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal"
@@ -117,6 +117,26 @@
       <!-- List of teachers end -->
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)='closeTeacherModal()'>Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade show" id="deleteTeacherModal" tabindex="-1" role="dialog" aria-labelledby="deleteTeacherModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteTeacherModalLabel">Confirm</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" (click)='closeDeleteTeacherModal()'>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Confirm delete?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)='closeDeleteTeacherModal()'>Cancel</button>
+        <button type="button" class="btn btn-primary" (click)='deleteTeacher()'>Yes</button>
       </div>
     </div>
   </div>

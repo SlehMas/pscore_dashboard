@@ -1,7 +1,15 @@
-<app-page-header [heading]="'Volunteers'" [icon]=""></app-page-header>
-<div class="mb-3">
-  <a [routerLink]="['/volunteers/new']" class="btn btn-danger">Add volunteer</a>
-</div>
+
+<h1 style="text-align: center;"><strong><span style="color: #5c7ddc;">Volunteers</span></strong></h1>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">&nbsp;</p>
+
+ 
+  <div class="mb-3" style="text-align: right;">
+    <a [routerLink]="['/volunteers/new']" class="btn btn-danger" style="background-color: #5c7ddc; border-color: #5c7ddc;"    >Add a new volunteer</a>
+  </div>
+  <p style="text-align: center;"></p>
+
+
 <div class="card">
   <div class="card-body table-responsive">
     <div *ngIf="!volunteers.length">
@@ -21,15 +29,15 @@
       </thead>
       <tbody>
         <tr *ngFor="let volunteer of volunteers">
-          <th scope="row">{{volunteer.id}}</th>
-          <td>{{volunteer.email}}</td>
-          <td>{{volunteer.firstname}}&nbsp;{{volunteer.lastname}}</td>
-          <td>{{volunteer.start_date}}</td>
-          <td>{{volunteer.end_date}}</td>
-          <td>{{volunteer.status}}</td>
+          <th scope="row">{{volunteer.id_volunteer}}</th>
+          <td>{{volunteer.email_volunteer}}</td>
+          <td>{{volunteer.firstname_volunteer}}&nbsp;{{volunteer.lastname_volunteer}}</td>
+          <td>{{volunteer.dateofstart_volunteer}}</td>
+          <td>{{volunteer.dateofend_volunteer}}</td>
+          <td>{{volunteer.status_volunteer}}</td>
           <td>
             <div class="btn-group" role="group" aria-label="Basic example">
-              <a [routerLink]="['/volunteers/edit', volunteer.id]" style="color: white" class="btn btn-primary">
+              <a [routerLink]="['/volunteers/edit', volunteer.id_volunteer]" style="color: white" class="btn btn-primary">
                 <i class="fa fa-pencil"></i>
               </a>
               <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal"
@@ -42,7 +50,6 @@
       </tbody>
     </table>
   </div>
-</div>
 
 <div class="modal fade show" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">

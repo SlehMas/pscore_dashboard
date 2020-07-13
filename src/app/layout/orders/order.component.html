@@ -1,0 +1,75 @@
+<h1 style="text-align: center;"><strong><span style="color: #5c7ddc;">Orders</span></strong></h1>
+
+  <div class="card">
+    <div class="card-body table-responsive">
+      <div *ngIf="!orders.length">
+        <h2 class="text-center">No data found</h2>
+      </div>
+      <table class="table" *ngIf="orders.length">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>User</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Date</th>
+            <th>Address</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders">
+            <th scope="row">{{order.id_order}}</th>
+            <td>{{order.username_user}}</td>
+            <td>{{order.email_order}}</td>
+            <td>{{order.phone_order}}</td>
+            <td>{{order.date_order}}</td>
+            <td class="subject-display">{{order.address_order}}</td>
+            <td>{{order.total_order}}</td>
+            <td>{{order.status_order}}</td>
+            <td *ngIf="order.status_order == 'on_hold'">
+              <div class="btn-group" role="group" aria-label="Basic example">                
+                <button style="color: white" 
+                        class="btn btn-primary"
+                        (click)="showModal(order.id_order, 'accepted')">
+                  <i class="fa fa-check"></i>
+                </button>
+                <button type="button" 
+                        class="btn btn-danger" 
+                        data-toggle="modal" 
+                        data-target="#exampleModal"
+                        (click)="showModal(order.id_order, 'denied')">
+                  <i class="fa fa-times"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+
+
+<div class="modal fade show" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="orderModalLabel">Confirm</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" (click)='closeModal()'>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Confirm selection?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)='closeModal()'>Cancel</button>
+        <button type="button" class="btn btn-primary" (click)='update ()'>Yes</button>
+      </div>
+    </div>
+  </div>
+</div>

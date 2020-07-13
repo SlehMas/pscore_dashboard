@@ -32,7 +32,6 @@ function deleteArticle(req, res) {
 }
 function updateArticle(req, res) {
   const oldArticle = req.body
-  console.log(oldArticle)
   articleService.updateArticle(oldArticle).then(data => {
     res.send(data)
   }).catch((err) => {
@@ -49,10 +48,7 @@ function getArticles(req, res) {
 
 function addArticle(req, res) {
   const newArticle = req.body
-  var json_format = iValidator.json_schema(schema.postSchema, newArticle, "newArticle");
-   if (json_format.valid == false) {
-     return res.status(422).send(json_format.errorMessage);
-   }
+  console.log(newArticle)
   articleService.addArticle(newArticle).then(data => {
     res.send(data)
   }).catch((err) => {

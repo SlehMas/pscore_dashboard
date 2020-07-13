@@ -1,14 +1,14 @@
 <app-page-header [heading]="id ? 'Edit Article' : 'New Article'" [icon]=""></app-page-header>
-<form action="" [formGroup]="articleForm">
+<form action="" [formGroup]="articleForm" *ngIf="articleForm">
   <div class="form-group">
       <label for="">Subject</label>
-      <input type="text" name="subject" id="subject" class="form-control" formControlName="subject">
+      <input type="text" name="subject_article" id="subject_article" class="form-control" formControlName="subject_article">
 
       <label for="">Author</label>
-      <input type="text" name="subject" id="subject" class="form-control" formControlName="author" readonly>
+      <input type="text" name="author_article" id="author_article" class="form-control" formControlName="author_article" readonly>
 
       <label for="">Body</label>
-      <textarea name="body" id="body" cols="30" rows="10" class="form-control" formControlName="body"></textarea>
+      <textarea name="body_article" id="body_article" cols="30" rows="10" class="form-control" formControlName="body_article"></textarea>
       
       <div class="btn-group mt-3 pull-right">
         <button class="btn btn-primary" [disabled]="isSubmitted" (click)="submit()">

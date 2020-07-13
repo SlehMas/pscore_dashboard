@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var UserRoute = require('../app/routes/user.route');
 var ArticleRoute = require('../app/routes/article.route')
 var TestimoniesRoute = require('../app/routes/testimonies.route')
+var OrderRoute = require('../app/routes/order.route')
 var CommentsRoute = require('../app/routes/comments.route')
 var AuthenticRoute = require('../app/routes/authentic.route');
 var ProductsRoute = require('../app/routes/product.route')
@@ -72,5 +73,6 @@ ArticleRoute.init(secureApi)
 CommentsRoute.init(secureApi)
 ProductsRoute.init(secureApi)
 VolunteersRoute.init(secureApi)
+OrderRoute.init(secureApi)
 
 module.exports = ApiConfig;

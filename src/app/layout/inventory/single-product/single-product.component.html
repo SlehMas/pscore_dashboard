@@ -23,8 +23,8 @@
                (change)="fileProgress($event)"
                formControlName="image">
       </div>
-      <div class="col" *ngIf="!previewUrl && product && product.image">
-        <img [src]="product.image" height="300" />
+      <div class="col" *ngIf="!previewUrl && product && product.image_product">
+        <img [src]="product.image_product" height="300" />
       </div>
       <div class="col" *ngIf="previewUrl">
         <img [src]="previewUrl" height="300" />

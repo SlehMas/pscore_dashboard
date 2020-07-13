@@ -1,4 +1,8 @@
-<app-page-header [heading]="id ? 'Edit Volunteer' : 'New Volunteer'" [icon]=""></app-page-header>
+
+<h2 style="text-align: center;"><strong><span style="color: #5c7ddc;">Add new volunteer form</span></strong></h2>
+<p style="text-align: center;">&nbsp;</p>
+
+
 <form action="" [formGroup]="volunteerForm" *ngIf="volunteerForm" (submit)="submit()">
   <div class="form-group">
     <label for="firstname">First Name</label>

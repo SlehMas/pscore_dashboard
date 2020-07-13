@@ -1,8 +1,13 @@
-<div [BrowserAnimationsModule]>
-  <app-page-header [heading]="'Articles'" [icon]=""></app-page-header>
-  <div class="mb-3">
-    <a [routerLink]="['/article/new']" class="btn btn-danger">Add article</a>
+<h1 style="text-align: center;"><strong><span style="color: #5c7ddc;">Articles</span></strong></h1>
+<p style="text-align: center;">&nbsp;</p>
+
+ 
+  <div class="mb-3" style="text-align: right;">
+    <a [routerLink]="['/article/new']" class="btn btn-danger" style="background-color: #5c7ddc; border-color: #5c7ddc;"    >Add a new article</a>
   </div>
+  <p style="text-align: center;"></p>
+
+  
   <div class="card">
     <div class="card-body table-responsive">
       <div *ngIf="!articles.length">
@@ -14,7 +19,6 @@
             <th>#</th>
             <th>Subject</th>
             <th>Created at</th>
-            <th>Updated at at</th>
             <th>Body</th>
             <th>Author</th>
             <th>Actions</th>
@@ -22,22 +26,21 @@
         </thead>
         <tbody>
           <tr *ngFor="let article of articles">
-            <th scope="row">{{article.id}}</th>
-            <td>{{article.subject}}</td>
-            <td>{{article.created_at}}</td>
-            <td>{{article.updated_at || '-'}}</td>
-            <td class="subject-display">{{article.body}}</td>
-            <td>{{article.username}}</td>
+            <th scope="row">{{article.id_article}}</th>
+            <td>{{article.subject_article}}</td>
+            <td>{{article.date_article}}</td>
+            <td class="subject-display">{{article.body_article}}</td>
+            <td>{{article.author_article}}</td>
             <td>
               <div class="btn-group" role="group" aria-label="Basic example">                
-                <a [routerLink]="['/article/edit', article.id]" style="color: white" class="btn btn-primary">
+                <a [routerLink]="['/article/edit', article.id_article]" style="color: white" class="btn btn-primary">
                   <i class="fa fa-pencil"></i>
                 </a>
                 <button type="button" 
                         class="btn btn-danger" 
                         data-toggle="modal" 
                         data-target="#exampleModal"
-                        (click)="showModal(article.id)">
+                        (click)="showModal(article.id_article)">
                   <i class="fa fa-trash"></i>
                 </button>
               </div>
@@ -47,7 +50,10 @@
       </table>
     </div>
   </div>
-</div>
+
+
+
+
 <div class="modal fade show" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

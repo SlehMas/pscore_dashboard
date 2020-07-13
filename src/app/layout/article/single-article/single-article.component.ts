@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ArticleService } from '../../../services/article.service';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { NotificationService } from 'src/app/services/notification.service';
-import { TestimonyService } from 'src/app/services/testimony.service';
+
 @Component({
   selector: 'app-single-article',
   templateUrl: './single-article.component.html',
@@ -31,17 +31,20 @@ export class SingleArticleComponent implements OnInit {
     if (this.id) {
       this.articleService.getArticle(this.id).subscribe(data => {
         this.article = data;
+        console.log(
+          this.article
+        )
         this.articleForm = new FormGroup({
-          subject: new FormControl(this.article.subject || ''),
-          body: new FormControl(this.article.body || ''),
-          author: new FormControl(this.currentUser.username)
+          subject_article: new FormControl(this.article.subject_article || ''),
+          body_article: new FormControl(this.article.body_article || ''),
+          author_article: new FormControl(this.currentUser.username_user)
         });
       });
     } else {
       this.articleForm = new FormGroup({
-        subject: new FormControl(''),
-        author: new FormControl(this.currentUser.username),
-        body: new FormControl('')
+        subject_article: new FormControl(''),
+        body_article: new FormControl(''),
+        author_article: new FormControl(this.currentUser.username_user)
       });
     }
   }
@@ -57,11 +60,11 @@ export class SingleArticleComponent implements OnInit {
 
     if (this.id) {
       this.articleService.updateArticle({
-        id: this.id,
-        subject: this.f.subject.value,
-        author: this.currentUser.id,
-        body: this.f.body.value,
-        updated_at: now
+        id_article: this.id,
+        subject_article: this.f.subject_article.value,
+        author_article: this.f.author_article,
+        body_article: this.f.body_article.value,
+        date_article: now
       }).subscribe(res => {
         this.router.navigateByUrl('/article');
         this.notificationService.notify('Updated successfully!');
@@ -75,10 +78,10 @@ export class SingleArticleComponent implements OnInit {
     }
     console.log('Saving new testimony');
     this.articleService.saveArticle({
-      subject: this.f.subject.value,
-      author: this.currentUser.id,
-      body: this.f.body.value,
-      created_at: now
+      subject_article: this.f.subject_article.value,
+      author_article: this.currentUser.username_user,
+      body_article: this.f.body_article.value,
+      date_article: now
     }).subscribe(res => {
       this.notificationService.notify('Added successfully!');
       this.router.navigateByUrl('/article');

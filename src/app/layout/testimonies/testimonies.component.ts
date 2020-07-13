@@ -16,7 +16,7 @@ export class TestimoniesComponent implements OnInit {
     private testimonyService: TestimonyService) { }
 
   ngOnInit(): void {
-    this.testimonyService.getTestimonys().subscribe(data => this.testimonies = data.sort((a, b) => b.id - a.id));
+    this.testimonyService.getTestimonys().subscribe(data => this.testimonies = data.sort((a, b) => b.id_testimony - a.id_testimony));
   }
 
   showModal (selected) {
@@ -30,7 +30,7 @@ export class TestimoniesComponent implements OnInit {
   }
   delete () {
     this.testimonyService.deleteTestimony(this.toDelete).subscribe(res => {
-      this.testimonies = this.testimonies.filter(a => a.id !== this.toDelete);
+      this.testimonies = this.testimonies.filter(a => a.id_testimony !== this.toDelete);
       this.notificationService.notify('Deleted successfully!');
       this.closeModal();
     }, err => {

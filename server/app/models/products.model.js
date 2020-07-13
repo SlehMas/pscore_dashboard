@@ -12,9 +12,10 @@ const productsModel = {
 
 function addImage (image, id) {
   return new Promise((resolve, reject) => {
-    db.query(`update products set image = '${image}' where id =${id}`, (error, rows, fields) => {
+    db.query(`update products set image_product = '${image}' where id_product =${id}`, (error, rows, fields) => {
       if (!!error) {
         dbFunc.connectionRelease;
+        console.log(error)
         reject(error.sqlMessage);
       } else {
         dbFunc.connectionRelease;
@@ -54,7 +55,7 @@ function addProduct (product) {
 }
 
 function updateProduct (product) {
-  const productId = product.id
+  const productId = product.id_product
   const keys = Object.keys(product)
   let values = Object.values(product)
   const updateRows = values.map((v, index) => {
@@ -62,9 +63,10 @@ function updateProduct (product) {
     return `${keys[index]}=${v}`
   })
   return new Promise((resolve, reject) => {
-    db.query(`update products set ${updateRows.join(',')}where id =${productId}`, (error, rows, fields) => {
+    db.query(`update products set ${updateRows.join(',')}where id_product =${productId}`, (error, rows, fields) => {
       if (!!error) {
         dbFunc.connectionRelease;
+        console.log(error)
         reject(error.sqlMessage);
       } else {
         dbFunc.connectionRelease;
@@ -76,7 +78,7 @@ function updateProduct (product) {
 
 function deleteProduct (id) {
   return new Promise((resolve, reject) => {
-    db.query(`delete from products where id=${id}`, (error, rows, fields) => {
+    db.query(`delete from products where id_product=${id}`, (error, rows, fields) => {
       if (!!error) {
         dbFunc.connectionRelease;
         reject(error.sqlMessage);
@@ -90,9 +92,10 @@ function deleteProduct (id) {
 
 function getProduct (id) {
   return new Promise((resolve, reject) => {
-    db.query(`SELECT * FROM products WHERE id = ${id}`, (error, rows, fields) => {
+    db.query(`SELECT * FROM products WHERE id_product = ${id}`, (error, rows, fields) => {
       if (!!error) {
         dbFunc.connectionRelease;
+        console.log(error)
         reject(error.sqlMessage);
       } else {
         dbFunc.connectionRelease;

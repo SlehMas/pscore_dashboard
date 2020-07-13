@@ -16,7 +16,7 @@ export class InventoryComponent implements OnInit {
     private inventoryService: InventoryService) { }
 
   ngOnInit(): void {
-    this.inventoryService.getProducts().subscribe(data => this.products = data.sort((a, b) => b.id - a.id));
+    this.inventoryService.getProducts().subscribe(data => this.products = data.sort((a, b) => b.id_product - a.id_product));
   }
 
   showModal (selected) {
@@ -30,7 +30,7 @@ export class InventoryComponent implements OnInit {
   }
   delete () {
     this.inventoryService.deleteProduct(this.toDelete).subscribe(res => {
-      this.products = this.products.filter(a => a.id !== this.toDelete);
+      this.products = this.products.filter(a => a.id_product !== this.toDelete);
       this.notificationService.notify('Deleted successfully!');
       this.closeModal();
     }, err => {

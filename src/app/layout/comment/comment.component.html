@@ -1,5 +1,5 @@
-<div [BrowserAnimationsModule]>
-  <app-page-header [heading]="'Comments'" [icon]=""></app-page-header>
+<h1 style="text-align: center;"><strong><span style="color: #5c7ddc;">Comments</span></strong></h1>
+<p style="text-align: center;">&nbsp;</p>
   <div class="card">
     <div class="card-body table-responsive">
       <div *ngIf="!comments.length">
@@ -18,22 +18,23 @@
         </thead>
         <tbody>
           <tr *ngFor="let comment of comments">
-            <th scope="row">{{comment.id}}</th>
+            <th scope="row">{{comment.id_comment}}</th>
             <td>
-              <a [routerLink]="['/article/edit', comment.article_id]">
-                {{comment.subject}}
+              {{comment.id_article_comment}}
+              <a [routerLink]="['/article/edit', comment.id_article_comment]">
+                {{comment.subject_article}}
               </a>
             </td>
-            <td>{{comment.body}}</td>
-            <td>{{comment.username}}</td>
-            <td>{{comment.created_at}}</td>
+            <td>{{comment.body_comment}}</td>
+            <td>{{comment.username_user}}</td>
+            <td>{{comment.date_comment}}</td>
             <td>
               <div class="btn-group" role="group" aria-label="Basic example">                
                 <button type="button" 
                         class="btn btn-danger" 
                         data-toggle="modal" 
                         data-target="#commentModal"
-                        (click)="showModal(comment.id)">
+                        (click)="showModal(comment.id_comment)">
                   <i class="fa fa-trash"></i>
                 </button>
               </div>
@@ -43,7 +44,9 @@
       </table>
     </div>
   </div>
-</div>
+
+
+
 <div class="modal fade show" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

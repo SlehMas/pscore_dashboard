@@ -12,9 +12,41 @@ var userService = {
   getStudentsByTeacherId,
   getTeachersThatAreNotMine,
   assignTeacher,
-  getAllApplications
+  getAllApplications,
+  updateApplication,
+  removeTeacherForStudent,
+  createUser
 }
 
+function createUser (user) {
+  return new Promise((resolve, reject) => {
+    userModel.createUser(suser).then((data) => {
+      resolve(data);
+    }).catch((err) => {
+      reject(err);
+    })
+  })
+}
+
+function updateApplication (status, appId) {
+  return new Promise((resolve, reject) => {
+    userModel.updateApplication(status, appId).then((data) => {
+      resolve(data);
+    }).catch((err) => {
+      reject(err);
+    })
+  })
+}
+
+function removeTeacherForStudent (teachId, studentId) {
+  return new Promise((resolve, reject) => {
+    userModel.removeTeacherForStudent(teachId, studentId).then((data) => {
+      resolve(data);
+    }).catch((err) => {
+      reject(err);
+    })
+  })
+}
 function getAllApplications () {
   return new Promise((resolve, reject) => {
     userModel.getAllApplications().then((data) => {

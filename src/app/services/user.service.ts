@@ -11,6 +11,12 @@ export class UserService {
   constructor(private http: HttpClient) {
   }
 
+  updateApplication (status, application_id) {
+    return this.http.put<any>(`${environment.secureApiUrl}applications`, {status: status as string, application_id: application_id})
+    .pipe(map(res => {
+      return res;
+    }));
+  }
   getAllApplications () {
     return this.http.get<any>(`${environment.secureApiUrl}applications`)
     .pipe(map(res => {
@@ -20,6 +26,13 @@ export class UserService {
 
   assignTeacher (studentId, teacherId) {
     return this.http.post<any>(`${environment.secureApiUrl}user/student/teacher/new`, {studentId, teacherId})
+    .pipe(map(res => {
+      return res;
+    }));
+  }
+
+  removeTeacher (studentId, teacherId) {
+    return this.http.delete<any>(`${environment.secureApiUrl}user/student/${studentId}/teacher/${teacherId}`)
     .pipe(map(res => {
       return res;
     }));

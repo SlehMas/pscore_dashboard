@@ -28,7 +28,7 @@ export class ArticleComponent implements OnInit {
   }
   delete () {
     this.articleService.deleteArticle(this.toDelete).subscribe(res => {
-      this.articles = this.articles.filter(a => a.id !== this.toDelete);
+      this.articles = this.articles.filter(a => a.id_article !== this.toDelete);
       this.notificationService.notify('Deleted successfully!');
       this.closeModal();
     }, err => {

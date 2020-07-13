@@ -28,7 +28,7 @@ export class CommentComponent implements OnInit {
   }
   delete () {
     this.commentService.deleteComment(this.toDelete).subscribe(res => {
-      this.comments = this.comments.filter(a => a.id !== this.toDelete);
+      this.comments = this.comments.filter(c => c.id_comment !== this.toDelete);
       this.notificationService.notify('Deleted successfully!');
       this.closeModal();
     }, err => {

@@ -1,42 +1,95 @@
 <nav class="sidebar" [ngClass]="{sidebarPushRight: isActive, collapsed: collapsed}">
   <div class="list-group">
-    <a [routerLink]="['/dashboard']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+   
+   
+    <a [routerLink]="['/home']" [routerLinkActive]="['router-link-active']" class="list-group-item">
       <i class="fa fa-fw fa-home"></i>&nbsp;
       <span>{{ 'Home' | translate }}</span>
     </a>
-    <a [routerLink]="['/article']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-      <i class="fa fa-fw fa-table"></i>&nbsp;
-      <span>{{ 'Articles' | translate }}</span>
-    </a>
+
+    <div class="nested-menu">
+      <a class="list-group-item" (click)="addExpandClass('our_work')">
+        <i class="fa fa-briefcase"></i>&nbsp;
+        <span>{{ 'Our Work' | translate }}</span>
+      </a>
+      <li class="nested" [class.expand]="showMenu === 'our_work'">
+        <ul class="submenu">
+          <li>
+            <a [routerLink]="['/article']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+              <i class="fa fa-fw fa-file-text"></i>&nbsp;
+              <span>{{ 'Articles' | translate }}</span>
+            </a>        
+          </li>
+          <li>
+            <a [routerLink]="['/comments']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+              <i class="fa fa-comment"></i>&nbsp;
+              <span>{{ 'Comments' | translate }}</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </div>
+
+
+ 
+   
+   
     <a [routerLink]="['/testimonies']" [routerLinkActive]="['router-link-active']" class="list-group-item">
       <i class="fa fa-eye"></i>&nbsp;
       <span>{{ 'Testimonies' | translate }}</span>
     </a>
-    <a [routerLink]="['/comments']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-      <i class="fa fa-comment"></i>&nbsp;
-      <span>{{ 'Comments' | translate }}</span>
-    </a>
+  
+  
+  
+    <div class="nested-menu">
+      <a class="list-group-item" (click)="addExpandClass('inventory')">
+        <i class="fa fa-archive"></i>&nbsp;
+        <span>{{ 'Inventory' | translate }}</span>
+      </a>
+      <li class="nested" [class.expand]="showMenu === 'inventory'">
+        <ul class="submenu">
+          <li>
+      
     <a [routerLink]="['/inventory']" [routerLinkActive]="['router-link-active']" class="list-group-item">
       <i class="fa fa-shopping-cart"></i>&nbsp;
-      <span>{{ 'Inventory' | translate }}</span>
+      <span>{{ 'Products' | translate }}</span>
     </a>
 
+          </li>
+          <li>
+            <a [routerLink]="['/orders']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+              <i class="fa fa-truck"></i>&nbsp;
+              <span>{{ 'Orders' | translate }}</span>
+            </a>   
+          </li>
+        </ul>
+      </li>
+    </div>
+  
+  
+    
     <div class="nested-menu">
-      <a class="list-group-item" (click)="addExpandClass('pages')">
-        <i class="fa fa-plus"></i>&nbsp;
+      <a class="list-group-item" (click)="addExpandClass('users')">
+        <i class="fa fa-users"></i>&nbsp;
         <span>{{ 'Users' | translate }}</span>
       </a>
-      <li class="nested" [class.expand]="showMenu === 'pages'">
+      <li class="nested" [class.expand]="showMenu === 'users'">
         <ul class="submenu">
           <li>
             <a [routerLink]="['/users']" [routerLinkActive]="['router-link-active']" >
-              <i class="fa fa-monument"></i>&nbsp;
-              <span>{{ 'List' | translate }}</span>
+              <i class="fa fa-id-card "></i>&nbsp;
+              <span>{{ 'List of users' | translate }}</span>
             </a>
           </li>
           <li>
             <a [routerLink]="['/applications']" [routerLinkActive]="['router-link-active']" >
-              <i class="fa fa-monument"></i>&nbsp;
+              <i class="fa fa-comments"></i>&nbsp;
+              <span>{{ 'Chat' | translate }}</span>
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['/applications']" [routerLinkActive]="['router-link-active']" >
+              <i class="fa fa-envelope-open"></i>&nbsp;
               <span>{{ 'Applications' | translate }}</span>
             </a>
           </li>
@@ -55,14 +108,20 @@
         <ul class="submenu">
           <li>
             <a [routerLink]="['/volunteers']" [routerLinkActive]="['router-link-active']" >
-              <i class="fa fa-users"></i>&nbsp;
+              <i class="fa fa-user"></i>&nbsp;
               <span>{{ 'Volunteers' | translate }}</span>
             </a>
           </li>
           <li>
             <a [routerLink]="['/volunteers/map']" [routerLinkActive]="['router-link-active']" >
               <i class="fa fa-map"></i>&nbsp;
-              <span>{{ 'Map' | translate }}</span>
+              <span>{{ 'Volunteers map' | translate }}</span>
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['/dashboard']" [routerLinkActive]="['router-link-active']" >
+              <i class="fa fa-calendar"></i>&nbsp;
+              <span>{{ 'Calender' | translate }}</span>
             </a>
           </li>
         </ul>

@@ -31,17 +31,18 @@ export class SingleTestimonyComponent implements OnInit {
     if (this.id) {
       this.testimonyService.getTestimony(this.id).subscribe(data => {
         this.testimony = data;
+        console.log(this.testimony)
         this.testimonyForm = new FormGroup({
-          subject: new FormControl(this.testimony.subject || ''),
-          body: new FormControl(this.testimony.body || ''),
-          author: new FormControl(this.currentUser.username)
+          subject_testimony: new FormControl(this.testimony.subject_testimony || ''),
+          body_testimony: new FormControl(this.testimony.body_testimony || ''),
+          author_testimony: new FormControl(this.testimony.author_testimony || '')
         });
       });
     } else {
       this.testimonyForm = new FormGroup({
-        subject: new FormControl(''),
-        author: new FormControl(this.currentUser.username),
-        body: new FormControl('')
+        subject_testimony: new FormControl(''),
+        author_testimony: new FormControl(this.currentUser.username_user),
+        body_testimony: new FormControl('')
       });
     }
   }
@@ -57,11 +58,10 @@ export class SingleTestimonyComponent implements OnInit {
 
     if (this.id) {
       this.testimonyService.updateTestimony({
-        id: this.id,
-        subject: this.f.subject.value,
-        author: this.currentUser.id,
-        body: this.f.body.value,
-        updated_at: now
+        id_testimony: this.id,
+        subject_testimony: this.f.subject_testimony.value,
+        author_testimony: this.f.author_testimony.value,
+        body_testimony: this.f.body_testimony.value,
       }).subscribe(res => {
         this.router.navigateByUrl('/testimonies');
         this.notificationService.notify('Updated successfully!');
@@ -75,10 +75,9 @@ export class SingleTestimonyComponent implements OnInit {
     }
     console.log('Saving new testimony');
     this.testimonyService.saveTestimony({
-      subject: this.f.subject.value,
-      author: this.currentUser.id,
-      body: this.f.body.value,
-      created_at: now
+      subject_testimony: this.f.subject_testimony.value,
+      author_testimony: this.f.author_testimony.value,
+      body_testimony: this.f.body_testimony.value,
     }).subscribe(res => {
       this.notificationService.notify('Added successfully!');
       this.router.navigateByUrl('/testimonies');

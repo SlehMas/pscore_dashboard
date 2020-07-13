@@ -24,65 +24,79 @@ export class SingleVolunteerComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private notificationService: NotificationService) {
-      this.route.paramMap.subscribe(params => {
-        this.id = params.get('id');
-      });
+    this.route.paramMap.subscribe(params => {
+      this.id = params.get('id');
+    });
 
 
-      if (this.id) {
-        this.volunteersService.getVolunteer(this.id).subscribe(data => {
-          this.volunteer = data;
-          this.startDate = this.volunteer.start_date;
-          this.endDate = this.volunteer.end_date;
-          this.active = this.volunteer.status === 'active';
-          this.volunteerForm = new FormGroup({
-            firstname: new FormControl(this.volunteer.firstname || ''),
-            lastname: new FormControl(this.volunteer.lastname || ''),
-            country: new FormControl(this.volunteer.country || ''),
-            email: new FormControl(this.volunteer.email || ''),
-            phone: new FormControl(this.volunteer.phone || ''),
-            description: new FormControl(this.volunteer.description || ''),
-            startDate: new FormControl(this.volunteer.start_date),
-            endDate: new FormControl(this.volunteer.end_date),
-            longitude: new FormControl(this.volunteer.longitude),
-            latitude: new FormControl(this.volunteer.latitude)
-          });
-
-          this.startDate = this.volunteer.start_date;
-          this.endDate = this.volunteer.end_date;
-        });
-      } else {
+    if (this.id) {
+      this.volunteersService.getVolunteer(this.id).subscribe(data => {
+        console.log(data)
+        this.volunteer = data;
+        console.log(this.volunteer);
+        this.startDate = this.getFormattedDate(new Date(this.volunteer.dateofstart_volunteer));
+        this.endDate = this.getFormattedDate(new Date(this.volunteer.dateofend_volunteer));
+        this.active = this.volunteer.status_volunteer === 'active';
         this.volunteerForm = new FormGroup({
-          firstname: new FormControl(''),
-          lastname: new FormControl(''),
-          country: new FormControl(''),
-          email: new FormControl(''),
-          phone: new FormControl(''),
-          description: new FormControl(''),
-          startDate: new FormControl(''),
-          endDate: new FormControl(''),
-          longitude: new FormControl(0),
-          latitude: new FormControl(0)
+          firstname: new FormControl(this.volunteer.firstname_volunteer || ''),
+          lastname: new FormControl(this.volunteer.lastname_volunteere || ''),
+          country: new FormControl(this.volunteer.country_volunteer || ''),
+          email: new FormControl(this.volunteer.email_volunteer || ''),
+          phone: new FormControl(this.volunteer.phone_volunteer || ''),
+          description: new FormControl(this.volunteer.description_volunteer || ''),
+          startDate: new FormControl(this.startDate),
+          endDate: new FormControl(this.endDate),
+          longitude: new FormControl(this.volunteer.longitude_volunteer),
+          latitude: new FormControl(this.volunteer.latitude_volunteer)
         });
-      }
-   }
-   setActive () {
-     this.active = !this.active;
-   }
-   getActive () {
-     return this.active ? 'active' : 'suspended';
-   }
+
+        this.startDate = this.volunteer.start_date;
+        this.endDate = this.volunteer.end_date;
+      });
+    } else {
+      this.volunteerForm = new FormGroup({
+        firstname: new FormControl(''),
+        lastname: new FormControl(''),
+        country: new FormControl(''),
+        email: new FormControl(''),
+        phone: new FormControl(''),
+        description: new FormControl(''),
+        startDate: new FormControl(''),
+        endDate: new FormControl(''),
+        longitude: new FormControl(0),
+        latitude: new FormControl(0)
+      });
+    }
+  }
+  getFormattedDate(date) {
+
+    const year = date.getFullYear(),
+      month = ('0' + (date.getMonth() + 1)).slice(-2),
+      day = date.getDate()
+
+    console.log(
+      [year, month, day].join('-')
+    )
+    return [year, month, day].join('-');
+  }
+
+  setActive() {
+    this.active = !this.active;
+  }
+  getActive() {
+    return this.active ? 'active' : 'suspended';
+  }
 
   ngOnInit(): void {
   }
 
-  setMinDate (date) {
+  setMinDate(date) {
     this.minDate = date;
   }
-  setMaxDate (date) {
+  setMaxDate(date) {
     this.maxDate = date;
   }
-  submit () {
+  submit() {
     if (this.volunteerForm.invalid) {
       this.isSubmitted = false;
       alert('Please fill all the information!');
@@ -91,18 +105,18 @@ export class SingleVolunteerComponent implements OnInit {
     console.log(this.f.startDate.value, this.f.endDate.value)
     if (this.id) {
       this.volunteersService.updateVolunteer({
-        id: this.id,
-        firstname: this.f.firstname.value,
-        lastname: this.f.lastname.value,
-        country: this.f.country.value,
-        email: this.f.email.value,
-        phone: this.f.phone.value,
-        description: this.f.description.value,
-        start_date: this.f.startDate.value,
-        end_date: this.f.endDate.value,
-        status: this.getActive(),
-        longitude: this.f.longitude.value,
-        latitude: this.f.latitude.value
+        id_volunteer: this.id,
+        firstname_volunteer: this.f.firstname.value,
+        lastname_volunteer: this.f.lastname.value,
+        country_volunteer: this.f.country.value,
+        email_volunteer: this.f.email.value,
+        phone_volunteer: this.f.phone.value,
+        description_volunteer: this.f.description.value,
+        dateofstart_volunteer: this.getFormattedDate(new Date(this.f.startDate.value)),
+        dateofend_volunteer: this.getFormattedDate(new Date(this.f.endDate.value)),
+        status_volunteer: this.getActive(),
+        longitude_volunteer: this.f.longitude.value,
+        latitude_volunteer: this.f.latitude.value
       }).subscribe(res => {
         this.router.navigateByUrl('/volunteers');
         this.notificationService.notify('Updated successfully!');
@@ -113,17 +127,17 @@ export class SingleVolunteerComponent implements OnInit {
       });
     } else {
       this.volunteersService.saveVolunteer({
-        firstname: this.f.firstname.value,
-        lastname: this.f.lastname.value,
-        country: this.f.country.value,
-        email: this.f.email.value,
-        phone: this.f.phone.value,
-        description: this.f.firstname.value,
-        start_date: this.f.startDate.value,
-        end_date: this.f.endDate.value,
-        status: this.getActive(),
-        longitude: this.f.longitude.value,
-        latitude: this.f.latitude.value
+        firstname_volunteer: this.f.firstname.value,
+        lastname_volunteer: this.f.lastname.value,
+        country_volunteer: this.f.country.value,
+        email_volunteer: this.f.email.value,
+        phone_volunteer: this.f.phone.value,
+        description_volunteer: this.f.firstname.value,
+        dateofstart_volunteer:  this.getFormattedDate(new Date(this.f.startDate.value)),
+        dateofend_volunteer: this.getFormattedDate(new Date(this.f.endDate.value)),
+        status_volunteer: this.getActive(),
+        longitude_volunteer: this.f.longitude.value,
+        latitude_volunteer: this.f.latitude.value
       }).subscribe(res => {
         this.router.navigateByUrl('/volunteers');
         this.notificationService.notify('Updated successfully!');

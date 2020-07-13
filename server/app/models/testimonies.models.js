@@ -10,6 +10,7 @@ const testimoniesModel = {
 }
 
 function addTestimony(testimony) {
+  console.log(testimony)
   try {
     const keys = Object.keys(testimony).join(',')
     let values = Object.values(testimony)
@@ -22,6 +23,7 @@ function addTestimony(testimony) {
       db.query(`insert into testimonies (${keys}) values (${values})`, (error, rows, fields) => {
         if (!!error) {
           dbFunc.connectionRelease;
+          console.log(error)
           reject(error);
         } else {
           dbFunc.connectionRelease;
@@ -37,7 +39,7 @@ function addTestimony(testimony) {
 
 function getTestimonies() {
   return new Promise((resolve, reject) => {
-    return db.query('SELECT T.`id`, T.`subject`, T.`body`, T.`author`, T.`image`, T.`created_at`, T.`updated_at`, U.username FROM `testimonies` T join USERS U WHERE U.id = T.author', (error, rows, fields) => {
+    return db.query(`SELECT * FROM testimonies`, (error, rows, fields) => {
       if (!!error) {
         dbFunc.connectionRelease;
         reject(error);
@@ -51,7 +53,7 @@ function getTestimonies() {
 
 function getTesitomy(id) {
   return new Promise((resolve, reject) => {
-    return db.query('select * from testimonies where id=' + id, (error, rows, fields) => {
+    return db.query('select * from testimonies where id_testimony=' + id, (error, rows, fields) => {
       if (!!error) {
         dbFunc.connectionRelease;
         reject(error);
@@ -64,7 +66,7 @@ function getTesitomy(id) {
 }
 
 function updateTestimony(testimony) {
-  const testimonyId = testimony.id
+  const testimonyId = testimony.id_testimony
   const keys = Object.keys(testimony)
   let values = Object.values(testimony)
   const updateRows = values.map((v, index) => {
@@ -72,9 +74,10 @@ function updateTestimony(testimony) {
     return `${keys[index]}=${v}`
   })
   return new Promise((resolve, reject) => {
-    db.query(`update testimonies set ${updateRows.join(',')}where id =${testimonyId}`, (error, rows, fields) => {
+    db.query(`update testimonies set ${updateRows.join(',')}where id_testimony =${testimonyId}`, (error, rows, fields) => {
       if (!!error) {
         dbFunc.connectionRelease;
+        console.log(error)
         reject(error);
       } else {
         dbFunc.connectionRelease;
@@ -87,9 +90,10 @@ function updateTestimony(testimony) {
 
 function deleteTestimoy(id) {
   return new Promise((resolve, reject) => {
-    db.query(`delete from testimonies where id=${id}`, (error, rows, fields) => {
+    db.query(`delete from testimonies where id_testimony=${id}`, (error, rows, fields) => {
       if (!!error) {
         dbFunc.connectionRelease;
+        console.log(error)
         reject(error);
       } else {
         dbFunc.connectionRelease;

@@ -1,4 +1,13 @@
-<app-page-header [heading]="'Applications'" [icon]=""></app-page-header>
+
+
+
+<h1 style="text-align: center;"><strong><span style="color: #5c7ddc;">Applications</span></strong></h1>
+<p style="text-align: center;">&nbsp;</p>
+
+
+
+
+
 <div class="card">
   <div class="card-body table-responsive">
     <div *ngIf="!applications.length">
@@ -11,18 +20,57 @@
           <th>Email</th>
           <th>Full Name</th>
           <th>Applying to be</th>
-          <th>Result</th>
+          <th>Reason to apply</th>
+          <th>Status</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let application of applications">
-          <th scope="row">{{application.id}}</th>
-          <td>{{application.email}}</td>
-          <td>{{application.firstname}}&nbsp;{{application.lastname}}</td>
-          <td>{{application.purpose}}</td>
-          <td>{{application.verdict}}</td>
+          <th scope="row">{{application.id_application}}</th>
+          <td>{{application.email_application}}</td>
+          <td>{{application.name_application}}</td>
+          <td>{{application.type_application}}</td>
+          <td>{{application.description_application}}</td>
+          <td>{{application.status_application}}</td>
+          <td *ngIf="application.status_application == 'pending'">
+            <div class="btn-group" role="group" aria-label="Basic example">                
+              <button style="color: white" 
+                      class="btn btn-primary"
+                      (click)="showModal(application, 'accepted')">
+                <i class="fa fa-check"></i>
+              </button>
+              <button type="button" 
+                      class="btn btn-danger" 
+                      data-toggle="modal" 
+                      data-target="#exampleModal"
+                      (click)="showModal(application, 'denied')">
+                <i class="fa fa-times"></i>
+              </button>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>
+  </div>
+</div>
+
+<div class="modal fade show" id="updateApplicationModal" tabindex="-1" role="dialog" aria-labelledby="updateApplicationModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateApplicationModal">Confirm</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" (click)='closeUpdateApplicationModal()'>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Confirm action?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)='closeUpdateApplicationModal()'>Cancel</button>
+        <button type="button" class="btn btn-primary" (click)='updateApplication()'>Yes</button>
+      </div>
+    </div>
   </div>
 </div>

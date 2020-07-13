@@ -34,17 +34,17 @@ export class SingleProductComponent implements OnInit {
       this.inventoryService.getProduct(this.id).subscribe(data => {
         this.product = data;
         // format image
-        if (this.product.image) {
-          this.product.image = environment.imgUrl + this.product.image;
-          console.log(this.product.image)
+        if (this.product.image_product) {
+          this.product.image_product = environment.imgUrl + this.product.image_product;
+          console.log(this.product.image_product);
         }
         this.productForm = new FormGroup({
-          title: new FormControl(this.product.title || ''),
-          price: new FormControl(this.product.price || 0),
-          description: new FormControl(this.product.description || ''),
+          title: new FormControl(this.product.title_product || ''),
+          price: new FormControl(this.product.price_product || 0),
+          description: new FormControl(this.product.description_product || ''),
           image: new FormControl(''),
-          inventory: new FormControl(this.product.inventory),
-          category: new FormControl(this.product.category || '')
+          inventory: new FormControl(this.product.inventory_product),
+          category: new FormControl(this.product.category_product || '')
         });
       });
     } else {
@@ -93,21 +93,27 @@ export class SingleProductComponent implements OnInit {
     // update
     if (this.id) {
       this.inventoryService.updateProduct({
-        id: this.id,
-        title: this.f.title.value,
-        price: this.f.price.value,
-        description: this.f.description.value,
-        inventory: this.f.inventory.value,
-        category: this.f.category.value,
+        id_product: this.id,
+        title_product: this.f.title.value,
+        price_product: this.f.price.value,
+        description_product: this.f.description.value,
+        inventory_product: this.f.inventory.value,
+        category_product: this.f.category.value,
       }).subscribe(res => {
-        if (this.previewUrl) {
+        if (this.fileData) {
           formData.append('id', this.id);
+          // try image upload
           this.inventoryService.saveImage(formData).subscribe(imgRes => {
+            this.notificationService.notify('Added successfully!');
+            console.log(imgRes);
+            this.router.navigateByUrl('/inventory');
+            this.isSubmitted = false;
           });
+        } else {
+          this.notificationService.notify('Added successfully!');
+          this.router.navigateByUrl('/inventory');
+          this.isSubmitted = false;
         }
-        this.router.navigateByUrl('/inventory');
-        this.notificationService.notify('Updated successfully!');
-        this.isSubmitted = false;
       }, err => {
         this.error = err;
         this.notificationService.notify('An error occured while trying to update, please try again later');
@@ -118,21 +124,27 @@ export class SingleProductComponent implements OnInit {
 
     // new product
     this.inventoryService.saveProduct({
-      title: this.f.title.value,
-      price: this.f.price.value,
-      description: this.f.description.value,
-      category: this.f.category.value,
-      inventory: this.f.inventory.value
+      title_product: this.f.title.value,
+      price_product: this.f.price.value,
+      description_product: this.f.description.value,
+      category_product: this.f.category.value,
+      inventory_product: this.f.inventory.value
     }).subscribe(res => {
-      console.log('Add sucesful', res);
-      formData.append('id', res.insertId);
-      // try image upload
-      this.inventoryService.saveImage(formData).subscribe(imgRes => {
+      if (this.fileData) {
+        console.log('Add sucesful', res);
+        formData.append('id', res.insertId);
+        // try image upload
+        this.inventoryService.saveImage(formData).subscribe(imgRes => {
+          this.notificationService.notify('Added successfully!');
+          console.log(imgRes);
+          this.router.navigateByUrl('/inventory');
+          this.isSubmitted = false;
+        });
+      } else {
         this.notificationService.notify('Added successfully!');
-        console.log(imgRes);
         this.router.navigateByUrl('/inventory');
         this.isSubmitted = false;
-      });
+      }
     }, err => {
       this.error = err;
       this.notificationService.notify('An error occured while trying to save, please try again later');

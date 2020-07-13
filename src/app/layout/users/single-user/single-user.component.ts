@@ -15,6 +15,7 @@ export class SingleUserComponent implements OnInit {
   students: any[] = [];
   teachers: any[] = [];
   newTeachers: any[] = [];
+  toRemove = -1;
   isAddTeacher = false;
   isSubmitted = false;
   userForm: FormGroup;
@@ -30,21 +31,21 @@ export class SingleUserComponent implements OnInit {
         this.userService.getUser(this.id).subscribe(data => {
           this.user = data;
           this.userForm = new FormGroup({
-            username: new FormControl(this.user.username),
-            email: new FormControl(this.user.email),
-            firstname: new FormControl(this.user.firstname),
-            lastname: new FormControl(this.user.lastname),
-            phone: new FormControl(this.user.phone)
+            username: new FormControl(this.user.username_user),
+            email: new FormControl(this.user.email_user),
+            firstname: new FormControl(this.user.firstname_user),
+            lastname: new FormControl(this.user.lastname_user),
+            phone: new FormControl(this.user.phone_user)
           });
 
-          if (this.user && this.user.status === 'student') {
+          if (this.user && this.user.status_user === 'student') {
             this.userService.getTeachersByStudentsId(this.id).subscribe(teachersRes => {
               this.teachers = teachersRes;
               console.log('hi', this.teachers);
             });
           }
 
-          if (this.user && this.user.status === 'teacher') {
+          if (this.user && this.user.status_user === 'teacher') {
             this.userService.getStudentsByTeacherId(this.id).subscribe(studentRes => {
               this.students = studentRes;
               console.log('hi', this.students);
@@ -69,10 +70,10 @@ export class SingleUserComponent implements OnInit {
 
     if (this.id) {
       this.userService.updateUser({
-        id: this.id,
-        firstname: this.f.firstname.value,
-        lastname: this.f.lastname.value,
-        phone: this.f.phone.value
+        id_user: this.id,
+        firstname_user: this.f.firstname.value,
+        lastname_user: this.f.lastname.value,
+        phone_user: this.f.phone.value
       }).subscribe(res => {
         this.router.navigateByUrl('/users');
         this.notificationService.notify('Updated successfully!');
@@ -84,26 +85,44 @@ export class SingleUserComponent implements OnInit {
       return;
     }
   }
+  deleteTeacher () {
+    this.userService.removeTeacher(this.id, this.toRemove).subscribe(res => {
+      this.teachers.splice(
+        this.teachers.findIndex(t => t.id_user === this.toRemove),
+        1
+      );
+      this.closeDeleteTeacherModal();
+    });
+  }
 
   assignTeacher (teacher) {
     this.isAddTeacher = true;
-    this.userService.assignTeacher(this.id, teacher.id).subscribe(res =>{
+    this.userService.assignTeacher(this.id, teacher.id_user).subscribe(res =>{
       this.notificationService.notify('Successfully assigned.');
-      this.teachers.unshift(teacher)
+      this.teachers.unshift(teacher);
       this.isAddTeacher = false;
       this.closeTeacherModal();
       this.newTeachers = [];
     }, err => {
       this.assignTeacherError = true;
       this.isAddTeacher = false;
-    })
+    });
   }
-  showModal () {
+  showDeleteTeacherModal (teacherId) {
+    this.toRemove = teacherId;
+    console.log(this.toRemove)
+    document.getElementById('deleteTeacherModal').style.display = 'block';
+    document.getElementById('deleteTeacherModal').style.backgroundColor = 'rgba(0,0,0,0.56)';
+  }
+  closeDeleteTeacherModal () {
+    this.toRemove = -1;
+    document.getElementById('deleteTeacherModal').style.display = 'none';
+  }
+  showTeacherModal () {
     document.getElementById('addTeacherModal').style.display = 'block';
     document.getElementById('addTeacherModal').style.backgroundColor = 'rgba(0,0,0,0.56)';
     this.userService.getTeachersThatAreNotMine(this.id).subscribe(data => {
       this.newTeachers = data;
-      console.log(this.newTeachers);
     });
   }
   closeTeacherModal () {

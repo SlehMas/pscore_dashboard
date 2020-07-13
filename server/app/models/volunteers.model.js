@@ -40,18 +40,21 @@ function addVolunteer (volunteer) {
 }
 
 function updateVolunteer (volunteer) {
-  const volunteerId = volunteer.id
+  const volunteerId = volunteer.id_volunteer
   const keys = Object.keys(volunteer)
   let values = Object.values(volunteer)
+  keys.shift()
+  values.shift()
   const updateRows = values.map((v, index) => {
     if (typeof v === 'string') v = `'${v}'`
     return `${keys[index]}=${v}`
   })
-  console.log(`update volunteers set ${updateRows.join(',')}where id =${volunteerId}`)
+  console.log(`update volunteers set ${updateRows.join(',')} where id_volunteer =${volunteerId}`)
   return new Promise((resolve, reject) => {
-    db.query(`update volunteers set ${updateRows.join(',')}where id =${volunteerId}`, (error, rows, fields) => {
+    db.query(`update volunteers set ${updateRows.join(',')} where id_volunteer = ${volunteerId}`, (error, rows, fields) => {
       if (!!error) {
         dbFunc.connectionRelease;
+        console.log(error)
         reject(error.sqlMessage);
       } else {
         dbFunc.connectionRelease;
@@ -77,7 +80,7 @@ function getAllVolunteers() {
 
 function getVolunteersById(id) {
   return new Promise((resolve, reject) => {
-    db.query("SELECT * FROM volunteers WHERE id =" + id, (error, rows, fields) => {
+    db.query("SELECT * FROM volunteers WHERE id_volunteer =" + id, (error, rows, fields) => {
       if (!!error) {
         dbFunc.connectionRelease;
         reject(error);

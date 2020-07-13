@@ -1,8 +1,15 @@
-<div [BrowserAnimationsModule]>
-  <app-page-header [heading]="'Testimonies'" [icon]=""></app-page-header>
-  <div class="mb-3">
-    <a [routerLink]="['/testimonies/new']" class="btn btn-danger">Add testimony</a>
+
+<h1 style="text-align: center;"><strong><span style="color: #5c7ddc;">Testimonies</span></strong></h1>
+<p style="text-align: center;">&nbsp;</p>
+
+ 
+  <div class="mb-3" style="text-align: right;">
+    <a [routerLink]="['/testimonies/new']" class="btn btn-danger" style="background-color: #5c7ddc; border-color: #5c7ddc;"    >Add a new testimony</a>
   </div>
+  <p style="text-align: center;"></p>
+
+  
+
   <div class="card">
     <div class="card-body table-responsive">
       <div *ngIf="!testimonies.length">
@@ -13,8 +20,6 @@
           <tr>
             <th>#</th>
             <th>Subject</th>
-            <th>Created at</th>
-            <th>Updated at at</th>
             <th>Body</th>
             <th>Author</th>
             <th>Actions</th>
@@ -22,22 +27,20 @@
         </thead>
         <tbody>
           <tr *ngFor="let testimony of testimonies">
-            <th scope="row">{{testimony.id}}</th>
-            <td>{{testimony.subject}}</td>
-            <td>{{testimony.created_at}}</td>
-            <td>{{testimony.updated_at || '-'}}</td>
-            <td class="subject-display">{{testimony.body}}</td>
-            <td>{{testimony.username}}</td>
+            <th scope="row">{{testimony.id_testimony}}</th>
+            <td>{{testimony.subject_testimony}}</td>
+            <td class="subject-display">{{testimony.body_testimony}}</td>
+            <td>{{testimony.author_testimony}}</td>
             <td>
               <div class="btn-group" role="group" aria-label="Basic example">                
-                <a [routerLink]="['/testimonies/edit', testimony.id]" style="color: white" class="btn btn-primary">
+                <a [routerLink]="['/testimonies/edit', testimony.id_testimony]" style="color: white" class="btn btn-primary">
                   <i class="fa fa-pencil"></i>
                 </a>
                 <button type="button" 
                         class="btn btn-danger" 
                         data-toggle="modal" 
                         data-target="#exampleModal"
-                        (click)="showModal(testimony.id)">
+                        (click)="showModal(testimony.id_testimony)">
                   <i class="fa fa-trash"></i>
                 </button>
               </div>
@@ -47,7 +50,9 @@
       </table>
     </div>
   </div>
-</div>
+
+
+
 <div class="modal fade show" id="testimoniesModal" tabindex="-1" role="dialog" aria-labelledby="testimoniesModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
